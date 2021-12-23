@@ -1,0 +1,423 @@
+\documentclass[12pt]{article}
+\usepackage{latexsym,amssymb,amsmath,amsfonts,amsthm,arydshln,calc,comment,hyperref,mathrsfs,placeins,xcolor,graphicx,longtable,bm,cite,blkarray,bbm,dsfont}
+\usepackage[notref,notcite]{showkeys}
+\usepackage{tikz, tikz-cd}
+%\usetikzlibrary{matrix}
+\usetikzlibrary{fit, positioning, arrows}
+\hypersetup{colorlinks=true}
+
+\setlength{\textwidth}{6.4in}
+\setlength{\textheight}{8.8in}
+\setlength{\topmargin}{-0.6in}
+\setlength{\oddsidemargin}{.0in}
+\setlength{\evensidemargin}{.0in}
+
+
+%%%%%%%%%%%%%%%%%%%%%% all new theorem def
+
+\newtheorem{theorem}{Theorem}
+\numberwithin{theorem}{section} % counting in section, can also be changed by {subsection}
+\newtheorem{definition}{Definition}
+\numberwithin{definition}{section} % counting in section, can also be changed by {subsection}
+\newtheorem{assumption}{Assumption}
+\numberwithin{assumption}{section} % counting in section, can also be changed by {subsection}
+\newtheorem{lemma}{Lemma}
+\numberwithin{lemma}{section} % counting in section, can also be changed by {subsection}
+\newtheorem{remark}{Remark}
+\numberwithin{remark}{section} % counting in section, can also be changed by {subsection}
+\newtheorem{prop}{Proposition}
+\numberwithin{prop}{section} % counting in section, can also be changed by {subsection}
+\newtheorem{corollary}{Corollary}
+\numberwithin{corollary}{section} % counting in section, can also be changed by {subsection}
+\newtheorem{example}{Example} 
+\numberwithin{example}{section} % counting in section, can also be changed by {subsection}
+\newtheorem{question}{Question} 
+\numberwithin{question}{section} % counting in section, can also be changed by {subsection}
+\newtheorem{problem}{Problem} 
+\numberwithin{problem}{section} % counting in section, can also be changed by {subsection}
+\newtheorem{conjecture}{Conjecture}
+\numberwithin{conjecture}{section} % counting in section, can also be changed by {subsection}
+\newtheorem{append}{Appendix}  %%Yu
+\numberwithin{append}{section} % counting in section, can also be changed by {subsection}
+\newtheorem{property}{Property}  %%Yu  
+\numberwithin{property}{section} % counting in section, can also be changed by {subsection}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%% labeled equation
+
+\makeatletter
+\newcommand*\@dblLabelI{}
+\newcommand*\@dblLabelII {}
+\newcommand*\@dblequationAux {}
+
+\def\@dblequationAux #1,#2,%
+{\def\@dblLabelI{\label{#1}}\def\@dblLabelII{\label{#2}}}
+
+\newcommand*{\doubleequation}[3][]{%
+	\par\vskip\abovedisplayskip\noindent
+	\if\relax\detokenize{#1}\relax
+	\let\@dblLabelI\@empty
+	\let\@dblLabelII\@empty
+	\else % we assume here that the optional argument
+	% has the required shape A,B
+	\@dblequationAux #1,%
+	\fi
+	\makebox[0.5\linewidth-1.5em]{%
+		\hspace{\stretch2}%
+		\makebox[0pt]{$\displaystyle #2$}%
+		\hspace{\stretch1}%
+	}%
+	\makebox[0.5\linewidth-1.5em]{%
+		\hspace{\stretch1}%
+		\makebox[0pt]{$\displaystyle #3$}%
+		\hspace{\stretch2}%
+	}%
+	\makebox[3em][r]{(%
+		\refstepcounter{equation}\theequation\@dblLabelI, 
+		\refstepcounter{equation}\theequation\@dblLabelII)}%
+	\par\vskip\belowdisplayskip
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%% all new equation def
+
+\def\beq{ \begin{equation} }
+\def\eeq{ \end{equation} }
+\newenvironment{seq}{\beq\small}{\eeq} % Small equation (Yu)
+\newenvironment{teq}{\beq\tiny}{\eeq} % Tiny equation (Yu)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% all new skip def
+
+\def\mn{\medskip\noindent}
+\def\ms{\medskip}
+\def\bs{\bigskip}
+\def\bn{\bigskip\noindent}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\def\ep{\epsilon}
+\def\nass{\noalign{\smallskip}}
+\def\nams{\noalign{\smallskip}}
+\def\square{\vcenter{\vbox{\hrule height .4pt
+			\hbox{\vrule width .4pt height 5pt \kern 5pt
+				\vrule width .4pt} \hrule height .4pt}}}
+\def\eopt{\hfill$\square$}
+\def\NN{\mathbb{N}}
+\def\RR{\mathbb{R}}
+\def\ZZ{\mathbb{Z}}
+\def\eqd{\,{\buildrel d \over =}\,}
+\def\var{\hbox{var}\,}
+\def\hbr{\hfill\break}
+
+\def\P{{\mathbb P}}     % Probability (Louis)
+\def\E{{\mathbb E}}     % Expectation (Louis)
+\def\D{{\mathcal{D}}}     % Expectation (Louis)
+\def\Var{{\mathbb Var}} % Variance (Yu)
+\def\cor{\mathrm{corr}^r}   % correlation (Yu)
+\def\<{{\langle}} %Louis
+\def\>{{\rangle}} %Louis
+\def\=d{{\stackrel{d}{=}}}  % Yu: same in distribution
+\newenvironment{pf}{\noindent\emph{Proof \,}}{\mbox{}\qed} % Louis
+%\newcommand\=d{\stackrel{\mathclap{\normalfont\mbox{d}}}{=}}  
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\def\d{\mathrm{d}}   %derivative   
+\def\capo{\mathcal{O}}   % capital O order
+\def\smallo{\mathcal{o}}   % small O order
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% new fucntion & distributions
+
+\def\B{\mathop{\mathrm{B}}}		% Beta function
+\def\Ga{\mathop{\mathrm{Ga}}}   % Ga distribution
+\def\Be{\mathop{\mathrm{Be}}}	% Beta distribution
+
+%%%%%%%%%%%%%%%%%%%%%%%% 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% booktab, have no vertical lines
+
+\usepackage{booktabs}
+\usepackage{multirow}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+\usepackage[skip=0.5\baselineskip]{caption}
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%% project 3
+
+\def\vecsig{\bm{\sigma}}   %deterministic vector sigma
+\def\veci{\bm{i}}   %deterministic vector i
+\def\ctree{\mathcal{T}}   %collection of trees
+\def\csplit{\mathcal{S}}   %collection of splits
+\def\eff{\mathscr{R}_{\textnormal{eff}}}   %effective resistance
+
+%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\begin{document}
+	\title{Supplementary Material to \\ Foundation Model Features are Strong Baselines for Private Learning}
+	\date{\today}
+	\maketitle
+	\vspace{-1em}
+	
+	\setcounter{section}{0}
+	
+	\section{Setup}
+	
+	We want to estimate the differential privacy rate for general mechanism predicting multi-class problems with labels are long tail distributed.
+	
+	\subsection{Differential Privacy}
+	
+	Assume all data are coming from joint feature and label space $X\times Y$, $|Y|=M$. $S=\{(x_i,y_i)\}_{i=1}^n\subset (X\times Y)^n$ is a sample set. We further denote the set of features and labels for sample set as $S_1=\{(x_i)\}_{i=1}^n\subset X^n$ and $S_2=\{(y_i)\}_{i=1}^n\subset Y^n$.
+	
+	\begin{definition}(Distance between sample sets)
+		The $l_0$ "norm" of a sample set is defined as 
+		\begin{equation}
+			\lVert S \rVert_0 = \sum\limits_{i=1}^n \mathbbm{1}_{(x_i,y_i)=\vec{0}}
+		\end{equation}
+	The $l_0$ distance between two sample sets with same cardinality, i.e. $S=\{(x_i,y_i)\}_{i=1}^n$ and $S'=\{(x_i',y_i')\}_{i=1}^n$ is defined as, with $\sigma : [n]\to [n]$ as an arbitrary permutation map,
+	\begin{equation}
+		d(S,S')=\underset{\sigma}{\min}\sum\limits_{i=1}^n   \mathbbm{1}_{(x_i,y_i)-(x_{\sigma(i)},y_{\sigma(i)})=\vec{0}}
+	\end{equation}
+
+	\end{definition}
+
+\begin{remark}
+	Here $l_0$ "norm" is not a real norm, since the space of samples sets are not a vector space, but the distance we defined is a true metric in natural topology space of sample sets, a simple explanation of $d$ is how many different samples in these two sets. Be careful in generic setting, two sample point can be different with same feature but different labels, or same label but different features. In later setting, to show the impact of long-tailed distributed labels, we limit the space with locality, which means we can distinguish different samples quiet well in this setting.
+\end{remark}
+	
+	\begin{definition}(Differential Privacy)
+		A random mechanism $h: (X\times Y)^n\times X \to [M]$ is $(\epsilon,\delta)$-differential private if for all  possible subset $B$ of $[M]$, and $\forall S,S'\subset (X\times Y)^n$, s.t. $d(S,S')\le 1$,
+		\begin{equation}
+			\P (h(S,\cdot)\in B)\le \exp(\epsilon) \P (h(S',\cdot)\in B)+\delta
+		\end{equation}
+	In particular, when $\delta=0$, we call it $\epsilon$-differential private.
+	\end{definition} 
+
+	\begin{remark}
+		Estimating differential privacy from thin air is hard, in general, most differential private properties are transferable or amplified, which means, we always assume certain mechanism possessing certain level of differential privacy, then under certain transformation(i.e. grouping, adding random noise, typically Laplacian or Exponential Mechanism, etc.), we can achieve another level of differential privacy, better or worse. Thus we need to have more explicit structure for $h$, $X$ and $Y$ to have concrete analysis.
+	\end{remark}
+	
+	\subsection{Long Tail Distribution} 
+	For many empirical result, we realized the label space $Y$ always possesses "log tailed property", which intuitively means the  distributions of numbers is the portion of the distribution having many occurrences far from the "head" or central part of the distribution. For example, the most used Zipf's law, predicts that out of a population of $N$ elements, the normalized frequency of the element of rank i, $f(i;s,N)$, is:
+	\begin{equation}
+		f(i;s,N) = \frac{1/i^s}{\sum\limits_{j=1}^N (1/j^s)}
+	\end{equation}
+to avoid the trouble of estimating the Riemann's Zeta function on the denominator, we simple take $s=1$ as the most common choice, and adapt it to our setup, we have
+\begin{equation}
+	f(i)=\frac{1/i}{\sum\limits_{j=1}^M 1/j}
+\end{equation}
+which means, the frequency of the $i$-th most frequent label is equal(or proportional) to $1/i$.
+\begin{remark}
+	A simple lower and upper bound for the normalization is:
+	\begin{itemize}
+		\item $\ln (M+1)<\sum\limits_{j=1}^M 1/j< \ln (M)+1$
+		\item $\ln (\frac{M+1}{k})<\sum\limits_{j=k}^M 1/j< \ln (\frac{M}{k-1})$, $k>1$
+	\end{itemize} 
+\end{remark}
+
+\subsection{Locality for Feature Space}
+Typically we want to setup the joint distribution on $X\times Y$, which might be reasonable when we don't have requirement for marginal distribution of $Y$. A simple counterexample ruins most mechanism is, when a marginal distribution for fixed label are identical, then there is not way to distinguish different features for distinct labels in almost all reasonable mechanism. Thus in order to conclude the  differential privacy rate for such long tailed data are not performing ideally, it's no harm to give a stronger locality assumption for datas:
+
+\begin{definition}
+	A distribution $\D$ has locality iff $\forall\ (x,y),(x',y')\in X\times Y$, $\D(x,y)\neq 0$, $\D(x',y')\neq 0$, 
+	\begin{itemize}
+		\item if $y=y'$, $\lVert x-x'\rVert_\cdot\le K$\\
+		\item if $y\neq y'$, $\lVert x-x'\rVert_\cdot\ge c_1K$
+	\end{itemize}
+with some constant $c_1>1$ and $K>0$. We further assume the feature space is a finite dimensional norm space, since all norms are equivalent in such space: $\exists \lambda_1,\lambda_2>0$, $\forall x\in X$, 
+\begin{equation}
+	\lambda_1\lVert x \rVert_{norm1}\le \lVert x \rVert_{norm2}\
+	\le \lambda_2\lVert x \rVert_{norm1}
+\end{equation}
+WLOG, we choose $l_2$ norm.
+\begin{remark}
+	Here the first inequality tells us if the labels are the same, iff the features should be "similar"; and then if the labels are different, iff the features should be "totally different". We will use the word "similar features" and "totally different" in the following proof to represent the features with such properties.
+\end{remark}
+
+\end{definition}
+
+
+\subsection{Non-prior prediction}
+
+In real ML task we may always face the problem of observing unseen class in test set, which leads the problem into to a sub-regime of transfer learning, zero-shot learning. In some experimental result we have seen, if the pre-training network can provide good feature extractor, then if can have good representation of the extra info of the unseen class, we may perform well in zero-shot learning task. But in general case, it's natural to assume that the we should have no prior knowledge or bias to those unseen class prediction, which can bu formulated as: denote random mechanism $h=h_S$, which trained in data set $S$. Denote 
+\begin{equation}
+	B_{y}=\{x'| \lVert x-x'\rVert_2\le K, (x,y)\in S\}
+\end{equation}
+$\forall r\in [M]\backslash S_2$, $\forall x\in X\backslash\bigcup\limits_{y\in S_2} B_y$(here $\backslash$ denote the set exclusion),
+\begin{equation}
+	\P(h(x)=r)=c_2\frac{f(r)}{\sum\limits_{r'\in [M]/S_2}f(r')} 
+\end{equation}
+for some constant $c_2$(It's no harm just simply choose $c_2=1$, since we can reasonable make it as a real probability measure, and also $c_2$ will be canceled in the following proof). 
+\begin{remark}
+	Above assumption indicates a simple fact that: if we have seen a certain feature in our training data and we are sured that this feature shouldn't belong to any known classes, with no other prior info or bias on unseen classes, the prediction should be no better than a random choice based on the unseen class frequence, which is explicit demonstrated in Zipf law case.
+\end{remark} 
+	
+\section{Main result}
+	
+	\begin{theorem}
+		For arbitrary random mechanism is a mapping from $(X\times Y)^n\times X\to [M]$, denote $h$ as $h'$ are such mechanism only differ from the training sets, $S$ and $S'$, with $|S|=|S'|=n$ and $d(S,S')\le 1$. Assume all training and testing data are all i.i.d. from a distribution $\D$ with locality, and 
+		 label space $Y$ is long tailed distributed. If the random mechanism possesses non-prior prediction, then this mechanism has $\epsilon$-differential privacy, with at least
+		\begin{equation}
+			\begin{aligned}
+				\epsilon \ge\max&\Bigg\{\ln\bigg[\frac{1+\ln \big(\frac{M}{\min(M,n)-1}\big)}{\ln \big(\frac{M}{\min(M,n)-1}\big)}\bigg],\ \ln\bigg[ 1+ M\ln(\min(n,M))	\bigg],\\
+				& \ln \Bigg[\frac{M\ln M\cdot[M - n/(\ln M +1)]\cdot \ln\bigg(\frac{M+1+n/(\ln M +1)}{1+ n/(\ln M +1)}\bigg)}{[\ln M -\ln (\min(M-1,n))] (1-n/\ln M)} \Bigg]\Bigg\} 
+			\end{aligned}
+		\end{equation}
+	\end{theorem}
+	
+	
+	
+	\begin{proof}\
+	Followed by the definition, we simply need to do some worst case analysis, i.e. $\exists x\in X$ and $\exists r\in Y$,
+	\begin{equation}
+		\frac{\P(h(x)=r)}{\P(h'(x)=r)} \ge \exp(\epsilon)
+	\end{equation}
+	By the symmetry of DP form, we will discuss about the worst $\frac{\P(h(x)=r)}{\P(h'(x)=r)}$ and $\frac{\P(h'(x)=r)}{\P(h(x)=r)}$ simultaneously, in that case, we will simple switch $h$ and $h'$. When both probability are non-zero. There are different cases as followed:
+		
+	\noindent \textbf{Case I}:
+	In degenerated case, when $S_2=S_2'$(here doesn't imply $S_1=S_1'$, since they have seen same label doesn't mean all features are the same), then for any input $x$ and $r$, if we have seen both similar feature and seen label, then it implies $\P(h(x)=r)=\P(h'(x)=r)=1$; if we have seen either similar feature but  unseen label, or totally different feature but seen label, then it implies $\P(h(x)=r)=\P(h'(x)=r)=0$; otherwise, if the feature is totally different and the label is unseen, then since the non-prior prediction are same distributed, then 	\
+	\begin{equation}
+		\frac{\P(h(x)=r)}{\P(h'(x)=r)}=1.
+	\end{equation}
+	\vspace{0.2in}
+	
+	\noindent \textbf{Case II}: If $|S_2|+1=|S_2'|$, which means we have seen one more class for $S'$, then 
+
+	\noindent (II.I) If $x\in \bigcup\limits_{y\in S_2} B_y$, then 
+	\begin{equation}
+		\frac{\P(h(x)=r)}{\P(h'(x)=r)}=1.
+	\end{equation}
+	or $\P(h(x)=r)=\P(h'(x)=r)=0$ for $\forall r$.
+	
+	\noindent (II.II) If $x\notin \bigcup\limits_{y\in S_2} B_y$, but $\exists (x_1',y_1')\in S'$ s.t. $x\in B_{y_1'}$, and $r\in[M]\backslash\bigcup\limits_{y\in S_2\cup S_2'} B_y$, the worst situation will be switching $h$ and $h'$, and the extra label we see have a dominate weight 
+	\begin{equation}
+		\begin{aligned}
+			\frac{\P(h(x)=r)}{\P(h'(x)=r)}& = \frac{\sum\limits_{i\in M\backslash S_2'} \frac{1}{i}}{\sum\limits_{i\in M\backslash S_2} \frac{1}{i}} = \frac{1+\sum\limits_{i=\min(M,n)}^{M} \frac{1}{i}}{\sum\limits_{i=\min(M,n)}^{M} \frac{1}{i}}\\
+			&\ge \frac{1+\ln \big(\frac{M}{\min(M,n)-1}\big)}{\ln \big(\frac{M}{\min(M,n)-1}\big)} \\
+			&\overset{\Delta}{=} \exp(\alpha)
+		\end{aligned}
+	\end{equation}
+The first inequality is coming from the extreme case, when all data seen in $S$ are lowest frequent one, and the only extra label seen in $S'$ is the second lowest frequent one. 
+
+\noindent (II.III) If $x\notin \bigcup\limits_{y\in S_2} B_y$, but $\exists (x_1',y_1')\in S'$ s.t. $x\in B_{y_1'}$, and $r=y_1'$, we have $\P(h'(x)=r)=1$, and worst case happen when switching $h$ and $h'$, 
+
+\begin{equation}
+	\begin{aligned}
+		\frac{\P(h(x)=r)}{\P(h'(x)=r)}& = \frac{ 1}{\sum\limits_{i\in M\backslash S_2} \frac{1}{i}}=\frac{1}{\frac{\frac{1}{M}}{ \sum\limits_{i=1}^{\min(n,M)-1} \frac{1}{i} +\frac{1}{M} }}\\
+		& \ge 1+ M\ln(\min(n,M)) \\
+		& \overset{\Delta}{=} \exp(\beta)
+	\end{aligned}
+\end{equation}
+the first inequality is coming from the worst case, when $y_1'=1$, and $S$ has seen all 2nd to $\min(n,M )$-th most frequent classes, which makes the probability largest. 
+
+\noindent (II.IV) If $x\notin \bigcup\limits_{y\in S_2} B_y$, but $\exists (x_1',y_1')\in S'$ s.t. $x\in B_{y_1'}$, and $r\in \bigcup\limits_{y\in S_2} B_y$, we have $\P(h(x)=r)=\P(h'(x)=r)=1$.
+
+
+\noindent (II.V) If $x\notin \bigcup\limits_{y\in S_2'} B_y$, the case when $r\in[M]/\bigcup\limits_{y\in S_2\cup S_2'} B_y$, $r=y_1'$ or $r\in \bigcup\limits_{y\in S_2} B_y$ followed by the same as case (II.II), (II.III) and (II.IV).
+
+	\vspace{0.2in}
+
+\noindent \textbf{Case III}: If $|S_2|-1=|S_2'|$, by symmetry of differential privacy, we have the same bound, $\alpha,\beta$ as before.
+
+	\vspace{0.2in}
+
+	
+	\noindent \textbf{Case IV}:	
+		
+		
+	When a fixed $x$ doesn't appear in any "neighborhood" of any sample set data, i.e. for a give $x\in X$, 
+	\begin{equation}
+		\lVert x-x' \rVert_2\ge c_1 K, \ \forall x'\in S_1\cup S_1'
+	\end{equation}
+	we know for $\forall r\in S_2\cup S_2'$, followed by locality of the input,
+	\begin{equation}
+		\P (h(x)=r) = \P (h'(x)=r)=0.
+	\end{equation}
+	For $\forall r\in [M]/(S_2\cup S_2')$, the worst case happens with
+	\begin{equation}
+		\begin{aligned}
+			\frac{\P(h(x)=r)}{\P(h'(x)=r)} &= I_1/I_2
+		\end{aligned}
+	\end{equation}
+ with 
+ \begin{equation}
+ 	\begin{cases}
+ 		I_1\ge \sum\limits_{i=1}^M \bigg(1-\frac{1}{i\cdot (\ln M )}	 \bigg)^n \cdot c_2\cdot  \frac{1}{\ln M -\ln (\min(M-1,n))}\\
+ 		I_2\le \bigg(1-\frac{1}{\ln (M+1) }	 \bigg)^n \cdot c_2\cdot  \frac{1/M}{\ln (M+1)}
+ 	\end{cases}
+ \end{equation}
+The first terms of upper bound and lower bound for $I_1$ and $I_2$ resp. are coming from the fact that: if we denote $E$ as the set of at least one class hasn't been sampled from $S$ or $S'$, then it can be lower bounded by all samples are coming from the non-highest frequence class,  and upper bounded by union bound, i.e.
+
+\begin{equation}
+	\bigg(1-\frac{1}{\ln (M+1) }	 \bigg)^n\le \P(E) \le  \sum\limits_{i=1}^M \bigg(1-\frac{1}{i\cdot (\ln M )}	 \bigg)^n
+\end{equation}
+
+The second terms of upper bound and lower bound for $I_1$ and $I_2$ resp. are coming from the non-prior condition of our algorithm. Since $\forall x\in(0,1))$, let $a=\ln(\frac{1}{1-x})$,
+\begin{equation}
+	\begin{aligned}
+		(1-x)^n&=\frac{1}{e^{na}}=\frac{1}{\sum\limits_{i=1}^\infty \frac{(an)^i}{i!}}\le \frac{1}{1+na}\\
+		&=\frac{1}{1-n\ln(1/(1-x))}\le \frac{1}{1+nx}
+	\end{aligned}
+\end{equation}
+we have 
+\begin{equation}
+	\begin{aligned}
+		\sum\limits_{i=1}^M \bigg(1-\frac{1}{i\cdot (\ln M )}	 \bigg)^n & \ge 	\sum\limits_{i=1}^M \frac{i}{i+n/(\ln M +1)}\\
+		&\ge \int\limits_{1}^{M+1} \frac{x}{x+n/(\ln M +1)} \d x\\
+		&= M - n/(\ln M +1) \ln\bigg(\frac{M+1+n/(\ln M +1)}{1+ n/(\ln M +1)}\bigg)\\
+	\end{aligned}
+\end{equation}
+Combine the face that $\bigg(1-\frac{1}{\ln M }	 \bigg)^n\ge 1-\frac{n}{\ln M }$
+Thus
+\begin{equation}
+	\begin{aligned}
+		\frac{\P(h(x)=r)}{\P(h'(x)=r)} & = I_1/I_2\\
+		& \ge\frac{M\ln M\cdot[M - n/(\ln M +1)]\cdot \ln\bigg(\frac{M+1+n/(\ln M +1)}{1+ n/(\ln M +1)}\bigg)}{[\ln M -\ln (\min(M-1,n))] (1-n/\ln M)} \\
+		& \overset{\Delta}{=} e^\gamma
+	\end{aligned}
+\end{equation}
+Denote 
+
+\begin{equation}
+	\begin{aligned}
+		\epsilon =\max\{ \alpha, \beta,\gamma\}
+	\end{aligned}
+\end{equation}
+
+Therefore, $\exists x\in X$, $B\in\mathcal{B}[0,m]$, 
+\begin{equation}
+	\begin{aligned}
+		\P(h(x)\in B)&=\sum\limits_{r\in B} \P(h(x)=r)\\
+		 &\ge \exp(\epsilon) \P(h'(x)\in B)
+	\end{aligned}
+\end{equation}
+	
+
+\end{proof}	
+%%% Ref
+%%%	\bibliographystyle{plain}
+%%%	\bibliography{bibliography.bib}
+	
+	
+\end{document}
